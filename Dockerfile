@@ -1,0 +1,1 @@
+FROM bitnami/tomcat:latest
