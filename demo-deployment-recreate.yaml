@@ -4,6 +4,7 @@ metadata:
   name: demo-deployment
   labels:
     app: online-dep
+  namespace: custom-ns
 spec:
   replicas: 3
   selector:
