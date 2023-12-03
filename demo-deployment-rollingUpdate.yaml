@@ -1,0 +1,43 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-deployment-roll
+  labels:
+    app: online-dep
+  namespace: custom-ns
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: online-dep
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 50%
+      maxUnavailable: 50%
+      minReadySeconds: 30
+  template:
+    metadata:
+      labels:
+        app: online-dep
+    spec:
+      containers:
+        - name: online-book-store-dep
+          image: chethandokcerhub/online-image-for-deploy:REPLACE_TAG_FOR_ROLLINGUPDATE
+          ports:
+            - containerPort: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tomcat-service
+  namespace: custom-ns
+spec:
+  type: NodePort
+  selector:
+    app: online-dep
+  ports:
+    - port: 80
+      targetPort: 8080
