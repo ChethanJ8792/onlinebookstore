@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-deployment
+  labels:
+    app: online-dep
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: online-dep
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: online-dep
+    spec:
+      containers:
+        - name: online-book-store-dep
+          image: chethandokcerhub/online-image-for-deploy:REPLACE_TAG
+          ports:
+            - containerPort: 8080
